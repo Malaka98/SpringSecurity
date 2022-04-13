@@ -4,6 +4,7 @@ import com.securityexample.demo.model.Role;
 import com.securityexample.demo.model.User;
 import com.securityexample.demo.repository.RoleRepository;
 import com.securityexample.demo.repository.UserRepository;
+import com.securityexample.demo.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,8 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -37,11 +36,8 @@ public class UserService implements com.securityexample.demo.service.UserService
         }else {
             log.info("User found in the database");
         }
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRole().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+
+        return new CustomUserDetails(user);
     }
 
     @Override
