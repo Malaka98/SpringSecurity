@@ -42,10 +42,6 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/log")
-    public ResponseEntity<?> logOut() {
-        return ResponseEntity.ok().body("User LogOut");
-    }
 }
 
 @Getter

@@ -52,9 +52,9 @@ public class UserService implements com.securityexample.demo.service.UserService
     }
 
     @Override
-    public void addRoleToUser(String username, String rolename) {
+    public void addRoleToUser(String username, String roleName) {
         User user = userRepository.findByUsername(username);
-        Role role = roleRepository.findByName(rolename);
+        Role role = roleRepository.findByName(roleName);
         user.getRole().add(role);
     }
 
