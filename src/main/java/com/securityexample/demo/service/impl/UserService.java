@@ -1,5 +1,6 @@
 package com.securityexample.demo.service.impl;
 
+import com.securityexample.demo.entity.Role;
 import com.securityexample.demo.entity.User;
 import com.securityexample.demo.dto.RoleDTO;
 import com.securityexample.demo.dto.UserDTO;
@@ -43,15 +44,15 @@ public class UserService implements com.securityexample.demo.service.UserService
     }
 
     @Override
-    public void saveUser(UserDTO user) {
+    public UserDTO saveUser(UserDTO user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        userRepository.save(DtoConverter.dtoToUser(user));
+        return EntityConverter.userToDto(userRepository.save(DtoConverter.dtoToUser(user)));
     }
 
     @Override
-    public void saveRole(RoleDTO role) {
-        roleRepository.save(DtoConverter.dtoToRole(role));
+    public RoleDTO saveRole(RoleDTO role) {
+        return EntityConverter.roleToDto(roleRepository.save(DtoConverter.dtoToRole(role)));
     }
 
     @Override

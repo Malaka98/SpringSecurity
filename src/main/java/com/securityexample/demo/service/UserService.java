@@ -6,9 +6,9 @@ import com.securityexample.demo.dto.UserDTO;
 import java.util.List;
 
 public interface UserService {
-    void saveUser(UserDTO user);
+    UserDTO saveUser(UserDTO user);
 
-    void saveRole(RoleDTO role);
+    RoleDTO saveRole(RoleDTO role);
 
     void addRoleToUser(String username, String rolename);
 
