@@ -1,6 +1,6 @@
 package com.securityexample.demo.repository;
 
-import com.securityexample.demo.model.Role;
+import com.securityexample.demo.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

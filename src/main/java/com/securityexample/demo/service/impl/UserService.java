@@ -1,13 +1,15 @@
 package com.securityexample.demo.service.impl;
 
-import com.securityexample.demo.model.Role;
-import com.securityexample.demo.model.User;
+import com.securityexample.demo.entity.User;
+import com.securityexample.demo.dto.RoleDTO;
+import com.securityexample.demo.dto.UserDTO;
 import com.securityexample.demo.repository.RoleRepository;
 import com.securityexample.demo.repository.UserRepository;
 import com.securityexample.demo.security.CustomUserDetails;
+import com.securityexample.demo.util.DtoConverter;
+import com.securityexample.demo.util.EntityConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,31 +43,32 @@ public class UserService implements com.securityexample.demo.service.UserService
     }
 
     @Override
-    public User saveUser(User user) {
+    public void saveUser(UserDTO user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+
+        userRepository.save(DtoConverter.dtoToUser(user));
     }
 
     @Override
-    public Role saveRole(Role role) {
-        return roleRepository.save(role);
+    public void saveRole(RoleDTO role) {
+        roleRepository.save(DtoConverter.dtoToRole(role));
     }
 
     @Override
     public void addRoleToUser(String username, String roleName) {
-        User user = userRepository.findByUsername(username);
-        Role role = roleRepository.findByName(roleName);
-        user.getRole().add(role);
+        UserDTO user = EntityConverter.userToDto(userRepository.findByUsername(username));
+        RoleDTO role = EntityConverter.roleToDto(roleRepository.findByName(roleName));
+        user.getRole().add(DtoConverter.dtoToRole(role));
     }
 
     @Override
-    public User getUser(String username) {
-        return userRepository.findByUsername(username);
+    public UserDTO getUser(String username) {
+        return EntityConverter.userToDto(userRepository.findByUsername(username));
     }
 
     @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getUsers() {
+        return EntityConverter.userToDto(userRepository.findAll());
     }
 
 }

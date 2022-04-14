@@ -1,4 +1,4 @@
-package com.securityexample.demo.model;
+package com.securityexample.demo.entity;
 
 import lombok.*;
 
@@ -10,10 +10,11 @@ import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.*;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = AUTO)

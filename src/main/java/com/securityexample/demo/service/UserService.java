@@ -1,18 +1,18 @@
 package com.securityexample.demo.service;
 
-import com.securityexample.demo.model.Role;
-import com.securityexample.demo.model.User;
+import com.securityexample.demo.dto.RoleDTO;
+import com.securityexample.demo.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
-    User saveUser(User user);
+    void saveUser(UserDTO user);
 
-    Role saveRole(Role role);
+    void saveRole(RoleDTO role);
 
     void addRoleToUser(String username, String rolename);
 
-    User getUser(String username);
+    UserDTO getUser(String username);
 
-    List<User> getUsers();
+    List<UserDTO> getUsers();
 }
