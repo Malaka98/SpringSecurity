@@ -2,8 +2,6 @@ package com.securityexample.demo.controller;
 
 import com.securityexample.demo.dto.RoleDTO;
 import com.securityexample.demo.dto.UserDTO;
-import com.securityexample.demo.entity.Role;
-import com.securityexample.demo.entity.User;
 import com.securityexample.demo.service.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
