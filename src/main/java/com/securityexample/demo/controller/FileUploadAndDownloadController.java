@@ -1,6 +1,7 @@
 package com.securityexample.demo.controller;
 
 import com.securityexample.demo.dto.FileDTO;
+import com.securityexample.demo.exception.BadRequestException;
 import com.securityexample.demo.service.impl.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -21,31 +22,39 @@ public class FileUploadAndDownloadController {
     @PostMapping("/upload")
     ResponseEntity<FileDTO> fileUpload(@RequestParam("file") MultipartFile file) {
 
-        String fileName = fileStorageService.storeFile(file);
-        String url = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/api/download/")
-                .path(fileName)
-                .toUriString();
-        String contentType = file.getContentType();
+        try {
+            String fileName = fileStorageService.storeFile(file);
+            String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/api/download/")
+                    .path(fileName)
+                    .toUriString();
+            String contentType = file.getContentType();
 
-        FileDTO response = FileDTO.builder()
-                .fileName(fileName)
-                .contentType(contentType)
-                .url(url)
-                .build();
+            FileDTO response = FileDTO.builder()
+                    .fileName(fileName)
+                    .contentType(contentType)
+                    .url(url)
+                    .build();
 
-        return ResponseEntity.ok().body(response);
+            return ResponseEntity.ok().body(response);
+        }catch (Exception ex) {
+            throw new BadRequestException(ex.getMessage());
+        }
     }
 
     @GetMapping("/download/{fileName}")
     ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
 
-        Resource resource = fileStorageService.downloadFile(fileName);
-        MediaType contentType = MediaType.IMAGE_JPEG;
+        try {
+            Resource resource = fileStorageService.downloadFile(fileName);
+            MediaType contentType = MediaType.ALL;
 
-        return ResponseEntity.ok()
-                .contentType(contentType)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName" + resource.getFilename())
-                .body(resource);
+            return ResponseEntity.ok()
+                    .contentType(contentType)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName" + resource.getFilename())
+                    .body(resource);
+        }catch (Exception ex) {
+            throw new BadRequestException(ex.getMessage());
+        }
     }
 }
