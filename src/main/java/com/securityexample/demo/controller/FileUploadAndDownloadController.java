@@ -47,7 +47,7 @@ public class FileUploadAndDownloadController {
 
         try {
             Resource resource = fileStorageService.downloadFile(fileName);
-            MediaType contentType = MediaType.ALL;
+            MediaType contentType = MediaType.IMAGE_JPEG;
 
             return ResponseEntity.ok()
                     .contentType(contentType)
